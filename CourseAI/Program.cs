@@ -14,10 +14,11 @@ namespace CourseAI
             Dictionary<int, string> test = new Dictionary<int, string>
             {
                 { 0, "dog" },
-                { 0, "cat" } //throws error if multiple are added!
             };
             foreach (int i in test.Keys)
                 Console.WriteLine(test[i]);
+            IReadOnlyCollection<int> cow = new List<int>();
+            IEnumerable<int> goy = cow;
             Console.ReadLine();
         }
     }
