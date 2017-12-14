@@ -41,8 +41,7 @@ namespace CourseAI.Genetics
             while (true)
             {
                 List<string> randoms = new List<string>();
-                foreach (string s in current) //delegates need an adapter :(
-                    randoms.Add(Helper.WeightedRandom<string>.PickRandom(current, delegate (string a) { return test(a); }));
+                randoms = Helper.WeightedRandom<string>.PickRandoms(current, delegate (string a) { return test(a); }, current.Count);
 
                 Random r = new Random();
                 current.Clear();
@@ -67,6 +66,7 @@ namespace CourseAI.Genetics
                     }
                     current.Add(fusion1);
                     current.Add(fusion2);
+                    Console.WriteLine("Trying: " + fusion1 + " with fitness " + test(fusion1) + " and " + fusion2 + " with fitness " + test(fusion2));
                 }
 
                 //Now that current has the crossovers, check if any meet the goal!
@@ -75,7 +75,7 @@ namespace CourseAI.Genetics
                     if (r.NextDouble() < mutationRate)
                     {
                         char[] letters = current[i].ToArray();
-                        letters[r.Next(sLength)] = Char.Parse(r.Next(10).ToString());
+                        letters[r.Next(sLength)] = Char.Parse((r.Next(8) + 1).ToString());
                     }
                     string s = current[i];
                     if (test(s) == fitnessGoal)

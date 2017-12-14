@@ -9,22 +9,31 @@ namespace CourseAI.Helper
     static class WeightedRandom<Item>
     {
         public delegate int Weight(Item item);
-        public static Item PickRandom(List<Item> items, Weight weight)
+        public static List<Item> PickRandoms(List<Item> items, Weight weight, int count)
         {
             int sum = 0;
             foreach (Item i in items)
                 sum += weight(i);
 
-            int rnd = new Random().Next(sum);
-            foreach (Item i in items)
+            Random r = new Random();
+            List<Item> output = new List<Item>();
+
+            for (int i = 0; i < count; i++)
             {
-                int w = weight(i);
-                if (rnd < w)
-                    return i;
-                rnd -= w;
+                int rnd = r.Next(sum);
+                foreach (Item it in items)
+                {
+                    int w = weight(it);
+                    if (rnd < w)
+                    {
+                        output.Add(it);
+                        break;
+                    }
+                    rnd -= w;
+                }
             }
-            //Should never come here.
-            return default(Item);
+
+            return output;
         }
     }
 }

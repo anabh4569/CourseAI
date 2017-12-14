@@ -24,7 +24,7 @@ namespace CourseAI
                 String state = "";
                 for (int j = 0; j < 8; j++)
                 {
-                    state += r.Next(10);
+                    state += r.Next(8) + 1;
                 }
                 pop.Add(state);
             }
