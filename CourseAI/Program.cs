@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using CourseAI.Graphs;
+using CourseAI;
 
 namespace CourseAI
 {
@@ -11,15 +11,53 @@ namespace CourseAI
     {
         static void Main(string[] args)
         {
-            Dictionary<int, string> test = new Dictionary<int, string>
+            Random r = new Random();
+            List<string> pop = new List<string>
             {
-                { 0, "dog" },
+                "13572684",
+                "24748552",
+                "24415124",
+                "32752411",
             };
-            foreach (int i in test.Keys)
-                Console.WriteLine(test[i]);
-            IReadOnlyCollection<int> cow = new List<int>();
-            IEnumerable<int> goy = cow;
-            Console.ReadLine();
+            for (int i = 0; i < 100; i++)
+            {
+                String state = "";
+                for (int j = 0; j < 8; j++)
+                {
+                    state += r.Next(10);
+                }
+                pop.Add(state);
+            }
+            foreach (string state in pop)
+                Console.WriteLine(Queens(state));
+            Console.WriteLine("Solution: " +Genetics.Crossover.FindSolution(pop, Queens, 28, 0.2));
+            Console.ReadKey();
+        }
+
+        static int Queens(string state)
+        {
+            int freePairs = 0;
+            if (state.Length != 8)
+                return freePairs;
+            int[] vals = new int[8];
+            for (int i = 0; i < vals.Length; i++)
+            {
+                if (!Int32.TryParse(state[i].ToString(), out vals[i]))
+                    return freePairs;
+            }
+
+            for (int i = 0; i < vals.Length; i++)
+            {
+                for (int j = i + 1; j < vals.Length; j++)
+                {
+                    int a = vals[i];
+                    int b = vals[j];
+                    if (a != b && Math.Abs(a - b) != j - i)
+                        freePairs++;
+                }
+            }
+
+            return freePairs;
         }
     }
 }

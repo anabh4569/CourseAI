@@ -8,13 +8,6 @@ namespace CourseAI.Graphs
 {
     class Searcher<Node, Cost> where Cost : IComparable<Cost>
     {
-        /* Allows cost/value functions to be passed in;
-         * delegate = new 'class' that can be instantiated/passed around
-         *    ex: private Cost c1 = CoolFunc; c1 += OtherFunc; c1();
-         * event = keyword to a multicast delegate to allow adding from other classes but only private calls
-         *    ex: private event Cost c2 = CoolFunc; etc.
-         */
-        public delegate Cost Value(Node state);
         //Need edges that have costs (not meaningless labels or something)
         private Graph<Node, Cost> graph;
 
@@ -158,37 +151,39 @@ namespace CourseAI.Graphs
          * Nodes are now a pairing of state and value (or regular graph w/ some function that maps states to values).
          * Hill climbing and genetic algorithms:
          */
-        
-        /* Variants:
+         
+        /* Allows cost/value functions to be passed in;
+         * delegate = new 'class' that can be instantiated/passed around
+         *    ex: private Cost c1 = CoolFunc; c1 += OtherFunc; c1();
+         * event = keyword to a multicast delegate to allow adding from other classes but only private calls
+         *    ex: private event Cost c2 = CoolFunc; etc.
+         */
+        public delegate Cost Value(Node state);
+
+        /* Hill climbing: gradient ascent (states instead of continuous independent variable)
+         * Variants:
          * Sideways moves: to escape plateaus where neighbors are the same value
          * Random-restart: Multiple random initial starts, pick the best one to guess global max
          * Stochastic: random upwards movements
          * Local beam search: top k valued states instead of top #1
          * Stochastic beam: k successors are picked at random
          */
-        public Node HillClimbing(Node start, Value value)
+        public Node HillClimbing(Node start, Value vOfNode)
         {
             Node current = start;
             while (true)
             {
                 List<Node> neighbors = new List<Node>((IEnumerable<Node>)this.graph.ViewChildren(current));
-                Node maxN;
-                Cost max;
                 if (neighbors.Count > 0)
                 {
-                    //Find the max valued neighbor
-                    maxN = neighbors[0];
-                    max = value(maxN);
-                    for (int i = 1; i < neighbors.Count; i++)
+                    neighbors.Sort(delegate(Node x, Node y)
                     {
-                        if (value(neighbors[i]).CompareTo(max) > 0)
-                        {
-                            maxN = neighbors[i];
-                            max = value(maxN);
-                        }
-                    }
+                        return vOfNode(x).CompareTo(vOfNode(y));
+                    });
+                    Node maxN = neighbors[neighbors.Count - 1];
+                    Cost max = vOfNode(maxN);
 
-                    if (value(current).CompareTo(max) > 0)
+                    if (vOfNode(current).CompareTo(max) > 0)
                         return current;
 
                     current = maxN;
@@ -197,5 +192,7 @@ namespace CourseAI.Graphs
                     return current;
             }
         }
+
+        //Genetic algorithm/notes in another file
     }
 }
