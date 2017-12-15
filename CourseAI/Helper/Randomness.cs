@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace CourseAI.Helper
 {
-    static class WeightedRandom<Item>
+    static class Randomness<Item>
     {
         public delegate int Weight(Item item);
-        public static List<Item> PickRandoms(List<Item> items, Weight weight, int count)
+        public static List<Item> WeightedPicks(List<Item> items, Weight weight, int count)
         {
             int sum = 0;
             foreach (Item i in items)

@@ -43,11 +43,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Helper\WeightedRandom.cs" />
     <Compile Include="Genetics\Crossover.cs" />
     <Compile Include="Graphs\Graph.cs" />
     <Compile Include="Graphs\NFA.cs" />
     <Compile Include="Graphs\Searcher.cs" />
+    <Compile Include="Helper\Randomness.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

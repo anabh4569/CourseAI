@@ -19,7 +19,7 @@ namespace CourseAI
                 "24415124",
                 "32752411",
             };
-            for (int i = 0; i < 100; i++)
+            for (int i = 0; i < 1000; i++)
             {
                 String state = "";
                 for (int j = 0; j < 8; j++)
