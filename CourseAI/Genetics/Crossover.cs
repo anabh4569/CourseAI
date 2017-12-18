@@ -83,5 +83,7 @@ namespace CourseAI.Genetics
                 }
             }
         }
+
+        //Next stop: adversarial games in SoloStates
     }
 }

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace CourseAI.Graphs
 {
-    class Searcher<Node, Cost> where Cost : IComparable<Cost>
+    sealed class Searcher<Node, Cost> where Cost : IComparable<Cost>
     {
         //Need edges that have costs (not meaningless labels or something)
         private Graph<Node, Cost> graph;
@@ -167,6 +167,8 @@ namespace CourseAI.Graphs
          * Stochastic: random upwards movements
          * Local beam search: top k valued states instead of top #1
          * Stochastic beam: k successors are picked at random
+         * 
+         * Note: this version isn't as memory efficient as it should be: requires whole graph
          */
         public Node HillClimbing(Node start, Value vOfNode)
         {
