@@ -138,9 +138,10 @@ namespace CourseAI.SoloStates
          * These weights can be determined via machine learning (linear regression? but this would require a training set)!
          * 
          * Beyond alpha-beta pruning: Stochastic Games (chance/non-deterministic)
-         * 
+         * Now, there's layers of chance nodes/children between max/min layers. Upgraded minimax: for chance nodes, it's the
+         * average of all children nodes.
          */
 
-        private static void Hog(string[] args) { }
+        //On to machine learning (K nearest neighbors to start)!
     }
 }

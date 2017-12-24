@@ -11,6 +11,7 @@ namespace CourseAI
     {
         static void Main(string[] args)
         {
+            Console.WriteLine(default(float));
             Console.ReadKey();
         }
 
